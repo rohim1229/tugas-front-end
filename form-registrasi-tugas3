@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Nilai - Tugas 3</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e1e1e1;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #4facfe;
+            box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .result-item {
+            margin-bottom: 10px;
+            padding: 8px;
+            background: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Form Nilai Mahasiswa</h1>
+        <form id="gradeForm">
+            <div class="form-group">
+                <label for="namaDepan">Nama Depan</label>
+                <input type="text" id="namaDepan" name="namaDepan" required>
+            </div>
+            <div class="form-group">
+                <label for="namaBelakang">Nama Belakang</label>
+                <input type="text" id="namaBelakang" name="namaBelakang" required>
+            </div>
+            <div class="form-group">
+                <label for="nilaiAngka">Nilai Angka</label>
+                <input type="number" id="nilaiAngka" name="nilaiAngka" min="0" max="100" required>
+            </div>
+            <button type="submit" class="btn">Tampilkan Hasil</button>
+        </form>
+        <div id="result" class="result" style="display: none;"></div>
+    </div>
+
+    <script>
+        function konversiNilaiHuruf(nilai) {
+            if (nilai >= 85) return 'A';
+            if (nilai >= 75) return 'B';
+            if (nilai >= 65) return 'C';
+            if (nilai >= 55) return 'D';
+            return 'E';
+        }
+
+        document.getElementById('gradeForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const namaDepan = document.getElementById('namaDepan').value;
+            const namaBelakang = document.getElementById('namaBelakang').value;
+            const nilaiAngka = parseInt(document.getElementById('nilaiAngka').value);
+            const namaLengkap = `${namaDepan} ${namaBelakang}`;
+            const nilaiHuruf = konversiNilaiHuruf(nilaiAngka);
+            
+            // Tampilkan di halaman
+            const resultDiv = document.getElementById('result');
+            resultDiv.innerHTML = `
+                <div class="result-item">
+                    <strong>Nama Lengkap:</strong> ${namaLengkap}
+                </div>
+                <div class="result-item">
+                    <strong>Nilai Angka:</strong> ${nilaiAngka}
+                </div>
+                <div class="result-item">
+                    <strong>Nilai Huruf:</strong> ${nilaiHuruf}
+                </div>
+            `;
+            resultDiv.style.display = 'block';
+            
+            // Tampilkan di console log
+            console.log(`Nama Lengkap: ${namaLengkap}`);
+            console.log(`Nilai Angka: ${nilaiAngka}`);
+            console.log(`Nilai Huruf: ${nilaiHuruf}`);
+        });
+    </script>
+</body>
+</html>
